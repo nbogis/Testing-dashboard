@@ -1,24 +1,26 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Testing dashboard app is written in Ruby 2.2.5 and rails 5. It shows the results and execution time for testing elements of many products. The testing heirarchy is represented as:
+1- Product
+  A. Protocols
+    i. Testsuites
+      a. Testcases
 
-Things you may want to cover:
+Each of these element has it's own page that shows charts for testing result and the time it takes to finish executing the element.
+The app uses PostgreSQL for data storage, rspec, facroty girl and capybara for testing the app, morris for the charts, and bootstrap for the front-end.
 
-* Ruby version
+The app includes different compenents:
 
-* System dependencies
+* PostgreSQL
 
-* Configuration
+* Rspec
 
-* Database creation
+* Factory Girl
 
-* Database initialization
+* Capybara
 
-* How to run the test suite
+* Devise
 
-* Services (job queues, cache servers, search engines, etc.)
+* Morris charts
 
-* Deployment instructions
-
-* ...
+* Bootstrap
