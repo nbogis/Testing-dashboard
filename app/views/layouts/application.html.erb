@@ -60,7 +60,7 @@
                                                  <li>
                                                    <% i += 1 %>
                                                     <span data-target="#item<%= i %>" data-toggle="collapse"><span class="collapse in hidden-xs"><span class="hover-highlight glyphicon glyphicon-plus"></span>&nbsp;
-                                                    <%= link_to suite.name,product_protocol_testsuites_path(prod,prot,suite) %>
+                                                    <%= link_to suite.name,product_protocol_testsuite_path(prod,prot,suite) %>
                                                     </span>
                                                       <ul class="nav nav-stacked collapse" id="item<%= i %>">
                                                         <% suite.testcases.each do |testcase| %>
