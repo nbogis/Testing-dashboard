@@ -1,0 +1,2 @@
+class TestDocumenting < ApplicationRecord
+end

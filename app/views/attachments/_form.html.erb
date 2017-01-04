@@ -1,0 +1,10 @@
+<%= form_for [product,protocol, attachment] do |form| %>
+	<div class="form-group">
+		<h3>New File</h3>
+		<%= form.label :attach %>
+		<%= form.file_field :attach, class: "form-control attach-wrapper"%>
+	</div>
+	<div>
+		<%= form.submit 'Upload', class: "button animate gray" %>
+	</div>
+<% end %>

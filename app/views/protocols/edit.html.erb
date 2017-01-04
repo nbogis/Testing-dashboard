@@ -1,0 +1,5 @@
+<% content_for :top_content do %>
+  <h1> Edit a protocol</h1>
+<% end %>
+<div><%= render partial: 'newform', locals: {product: Product.find(@protocol.product_id), protocol: @protocol, document: @document} %>
+  </div>

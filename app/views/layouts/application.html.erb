@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Software V&V Dashboard</title>
+    <meta charset="UTF-8">
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    'application'%>
+    <%= javascript_include_tag 'application'%>
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <%= link_to 'Testing Dashboard'.html_safe, products_path, id:"project" %>
+          <span class="set-to-right" id="logging">
+              <% if user_signed_in? %>
+                Logged in as <%= current_user.name %>
+              <%= link_to 'Profile', edit_user_registration_path, type:"button", class:"button animate gray"  %>
+              <%= link_to 'Log out', destroy_user_session_path, method: :delete, type:"button", class:"button animate gray"  %></p>
+            <% else %>
+                <%= link_to 'Log in', new_user_session_path, type:"button", class:"button animate gray" %>
+            <% end %>
+          </span>
+        </div>
+      </nav>
+      <!-- Header End -->
+
+      <!-- Side Menu -->
+      <div class="row">
+        <div class="col-sm-2" id="sidebar">
+            <div class="panel-group">
+              <% n = 0 %>
+              <% i = 0 %>
+              <% get_tree.each do |prod| %>
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                          <% n +=1 %>
+                          <span data-toggle="collapse" data-target="#collapse<%= n %>" ><span class="hover-highlight glyphicon glyphicon-home"></span>&nbsp;
+                          <%= link_to prod.name, product_path(prod)%>
+                          </span
+                        </h4>
+                    </div>
+                    <div id="collapse<%= n %>" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <ul class="no-left-padding">
+                                          <% prod.protocols.each do |prot| %>
+                                          <li>
+                                            <% i += 1 %>
+                                              <span data-target="#item<%= i %>" data-toggle="collapse"><span class="hover-highlight glyphicon glyphicon-plus"></span>&nbsp;
+                                              <%= link_to prot.name, product_protocol_path(prod,prot)%>
+                                              </span>
+                                               <ul class="nav nav-stacked collapse" id="item<%= i %>">
+                                                 <% prot.testsuites.each do |suite| %>
+                                                 <li>
+                                                   <% i += 1 %>
+                                                    <span data-target="#item<%= i %>" data-toggle="collapse"><span class="collapse in hidden-xs"><span class="hover-highlight glyphicon glyphicon-plus"></span>&nbsp;
+                                                    <%= link_to suite.name,product_protocol_testsuites_path(prod,prot,suite) %>
+                                                    </span>
+                                                      <ul class="nav nav-stacked collapse" id="item<%= i %>">
+                                                        <% suite.testcases.each do |testcase| %>
+                                                        <li>
+                                                          <% i += 1 %>
+                                                          <span class="testcase-only">
+                                                            <%= link_to testcase.name, product_protocol_testsuite_testcase_path(prod,prot,suite,testcase) %>
+                                                          </span>
+                                                        </li>
+                                                        <% end %>
+                                                      </ul>
+                                                 </li>
+                                                 <% end %>
+                                               </ul>
+                                          </li>
+                                          <% end %>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+              <% end %>
+              </div> <!--end tags for menu -->
+          </div> <!--end tag for side bar wrapper-->
+      <!-- End Side Menu -->
+
+      <!-- Content -->
+      <div class="col-lg-10" id="body">
+        <div class="banner">
+          <h1>Text Goes Here</h1>
+        </div>
+        <% flash.each do |key, value| %>
+          <div class="alert alert-<%= key %>">
+            <strong class="red"><%= value %></strong>
+          </div>
+        <% end %>
+        <%= yield %>
+      </div>
+    </div>
+    </div>
+  <!-- End Footer -->
+  </body>
+</html>

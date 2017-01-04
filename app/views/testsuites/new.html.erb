@@ -1,0 +1,6 @@
+<% content_for :top_content do %>
+  <h1>Create new testsuite</h1>
+<% end %>
+<div>
+  <%= render partial: 'newform', locals: {product: @protocol.product, protocol: @protocol, testsuite: @testsuite, documentation: @document} %>
+</div>

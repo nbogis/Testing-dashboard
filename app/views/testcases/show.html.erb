@@ -1,0 +1,45 @@
+
+<h1><% @testcase %></h1>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="well">
+      <p>Documentation:
+          <%= @documentation %>
+      </p>
+      <p>Setup:
+        <%= @setup %>
+      </p>
+      <p>Teardown:
+        <%= @teardown %>
+      </p>
+      <p>Created_by: <% if !@creator.first.nil? %>
+        <%= @creator.first.name  %>
+      <% end %>
+      <p>Modified_by: <% @modifiers.each do |modifier| %>
+        <%= "#{modifier.name}," %>
+        <% end %>
+      </p>
+      <p>Tags:
+        <% if !@tag.empty? %>
+          <% @tag.each do |t| %>
+          <%= "#{t.name}," %>
+          <% end %>
+        <% end %>
+      </p>
+      <p>Result:
+        <%= @result %>
+      </p>
+      <p>Execution_time:
+        <%= @exec_time %>
+      </p>
+      <h3>Teststeps</h3>
+      <ul style="list-style: none; ">
+        <% @teststeps.each do |step| %>
+        <li>
+          <%= step.body %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

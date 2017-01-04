@@ -1,0 +1,32 @@
+<%= form_for [product, protocol] do |form| %>
+<form class="form-horizontal">
+	<div class="form-group">
+		<%= form.label :name, class:"control-label" %>
+	<div class="col-sm-10">
+		<%= form.text_field :name, class:"form-control", placeholder:"Name" %>
+	</div>
+	</div>
+
+		<%= form.fields_for :documentation do |doc_field| %>
+	<div class="form-group">
+		<%= doc_field.label :body, "Documentation"%>
+	<div class="col-sm-10>">
+		<%= doc_field.text_field :body, autofocus: true, class:"form-control", placeholder:"Documentation" %>
+	</div>
+	</div>
+			<% end %>
+
+	<div class="form-group">
+		<%= form.label :revision %>
+	<div class="col-sm-10>">
+		<%= form.text_field :revision, autofocus: true, class:"form-control", placeholder:"Revision" %>
+	</div>
+	</div>
+
+	<div class="form-group">
+		<div style="padding-top:15px;">
+		<%= form.submit 'Submit',class: "btn btn-primary" %>
+		</div>
+	</div>
+</form>
+<% end %>

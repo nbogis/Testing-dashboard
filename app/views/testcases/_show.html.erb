@@ -1,0 +1,7 @@
+<ul>
+  <% testsuite.testcases.each do |testcase| %>
+    <li>
+      <%= link_to testcase.name.html_safe, product_protocol_testsuite_testcase_path(product, protocol,testsuite,testcase) %>
+    </li>
+  <%end%>
+</ul>

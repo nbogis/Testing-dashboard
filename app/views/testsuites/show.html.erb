@@ -1,0 +1,104 @@
+
+<h1><%= @testsuite.name %></h1>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="well">
+      <h3> Pass/Fail testcases </h3>
+      <!-- <div id="testsuite_PFchart"></div> -->
+      <script>
+        var green = '#A5D6A7', red = '#C8102E', yellow = '#FFE57F';
+
+        // variables for donut chart
+        var donut_data = [{
+          label: "Pass",
+          value: <%= @suite_results.find_all{|k| k[1] == "Pass"}.length %>
+          },
+          {
+          label: "Fail",
+          value: <%= @suite_results.find_all{|k| k[1] == "Fail"}.length %>
+          },
+          {
+          label: "Disabled",
+          value: <%= @suite_results.find_all{|k| k[1] == "Disabled"}.length %>
+          }];
+        var colors = [green, red, yellow];
+        var total =<%= @suite_results.length %>;
+
+        // variable for bar chart
+        // get testcases execution time
+        var time_seconds = [], time_format = [], results = [];
+        <% @suite_results.each do |elem| %>
+          time_seconds.push({
+            x: "<%= elem[0] %>",
+            a: <%= elem[-1] %>
+          });
+          time_format.push("<%= elem[-2] %>");
+          results.push("<%= elem[1] %>");
+        <% end %>
+        labels = ['Execution Time (sec)']
+      </script>
+      <%= content_tag :div, "",id: "morris_donut_chart" %>
+      <div id = "donut_legend"></div>
+      <%= content_tag :div, "",id: "exec_time_bar" %>
+      <p>Testsuite execution time:
+        <%= @suite_time %>
+      </p>
+
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="well">
+
+      <p>Documentation:
+        <%if !@testsuite.documentation.nil?%>
+          <%= @testsuite.documentation.body %>
+        <% end %>
+      </p>
+      <p>Suite setup:
+        <%= @suite_setup %>
+      </p>
+      <p>Suite teardown:
+        <%= @suite_teardown %>
+      </p>
+      <p>Test setup:
+        <%= @test_setup %>
+      </p>
+      <p>Test teardown:
+        <%= @test_teardown %>
+      </p>
+      <p>Default tags:
+        <% if !@default_tag.empty? %>
+          <% @default_tag.each do |tag| %>
+          <%= "#{tag.name}," %>
+          <% end %>
+        <% end %>
+      </p>
+      <p>Force tags:
+        <% if !@force_tag.empty? %>
+          <%= @force_tag.each do |tag| %>
+          <%= "#{tag.name}," %>
+          <% end %>
+        <% end %>
+      </p>
+      <p>Executed_by: <% @executors.each do |executor| %>
+        <%= "#{executor.name}," %>
+        <% end %>
+      </p>
+      <p>Created_by: <% if !@creator.first.nil? %>
+        <%= @creator.first.name  %>
+      <% end %>
+      <p>Modified_by: <% @modifiers.each do |modifier| %>
+        <%= "#{modifier.name}," %>
+        <% end %>
+      </p>
+      <%= render partial: 'testcases/show', locals: {product: @testsuite.protocol.product,
+                                                protocol: @testsuite.protocol,
+                                                testsuite: @testsuite} %>
+    </div>
+  </div>
+</div>
+
+<%-# = link_to "Add a test case", new_product_protocol_testsuite_path(@protocol.product, @protocol) -%>

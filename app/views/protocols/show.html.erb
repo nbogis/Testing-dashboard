@@ -1,0 +1,110 @@
+
+<h1><%= @protocol.name %></h1>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="well" id="medium-well">
+      <p>Documentation: <%if !@protocol.documentation.nil?%>
+        <%= @protocol.documentation.body %>
+      <% end %></p>
+      <p>Revision: <%= @protocol.revision %></p>
+      <p>Executed_by: <% @executors.each do |executor| %>
+        <%= executor.name %>
+        <% end %>
+      </p>
+      <p>Created_by: <% if !@creator.first.nil? %>
+        <%= @creator.first.name  %>
+      <% end %>
+      </p>
+      <p>Modified_by: <% @modifiers.each do |modifier| %>
+        <%= modifier.name %>
+        <% end %>
+      </p>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="well" id="medium-well">
+      <h2>Testsuites</h2>
+        <%= render partial: 'testsuites/show', locals: {product: @protocol.product,
+                                                  protocol: @protocol,
+                                                  testsuite: @testsuite} %>
+        <%= link_to "Add a test suite", new_product_protocol_testsuite_path(@protocol.product, @protocol) %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="well" id="well">
+
+      <h2>Testsuites Results</h2>
+      <script>
+        // variables for donut chart
+        var donut_data = [], colors = [];
+        var green = '#66BB6A', red = '#EB5050', yellow = '#FFC107';
+        // variables for donut chart
+        var donut_data = [{
+          label: "Pass",
+          value: <%= @prot_results.find_all{|k| k[1] == "Pass"}.length %>
+          },
+          {
+          label: "Fail",
+          value: <%= @prot_results.find_all{|k| k[1] == "Fail"}.length %>
+          },
+          {
+          label: "Disabled",
+          value: <%= @prot_results.find_all{|k| k[1] == "Disabled"}.length %>
+          }];
+        var colors = [green, red, yellow];
+        var total =<%= @prot_results.length %>;
+
+        // variables for bar chart
+        var time_seconds = [], time_format = [], results = [];
+        <% @prot_results.each do |elem| %>
+          time_seconds.push({
+            x: "<%= elem[0] %>",
+            a: <%= TimeModule.convert_to_seconds(elem[-1].to_time) %>
+          });
+          time_format.push("<%= elem[-1] %>");
+          results.push("<%= elem[1] %>");
+        <% end %>
+        labels = ['Execution Time (sec)']
+
+      </script>
+      <%= content_tag :div, "",id: "morris_donut_chart" %>
+      <div id = "donut_legend"></div>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="well" id="well">
+      <%= content_tag :div, "",id: "exec_time_bar" %>
+    </div>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="well clearfix">
+      <h2>Attachments</h2>
+      <table class="table table-responsive">
+          <thead>
+            <tr>
+              <th>File Name</th>
+              <th>File Type</th>
+              <th>File Size</th>
+              <th>Added At</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= render partial: 'attachment', locals: {protocol: @protocol} %>
+          </tbody>
+      </table>
+      <%= render partial: 'attachments/form', locals: {product: @protocol.product, protocol: @protocol, :attachment => @attachment} %>
+    <div><%= link_to '<span class="glyphicon glyphicon-arrow-left"></span>&nbsp Back to Product'.html_safe, product_path(@protocol.product)%></div>
+    </div>
+  </div>
+
+</div>

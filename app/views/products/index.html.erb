@@ -1,0 +1,36 @@
+
+<div class="wrap">
+    <% @products_results.each do |key, value| %>
+      <%= link_to product_path(key), type: "button", id: "product_#{key}" do %>
+        <div class="box">
+          <div class="box-content btn-lg btn-primary">
+          <div class="row">
+            <div class="col-md-3">
+              <p></p>
+              <p><%= value["name"] %></p>
+            </div>
+            <div class="col-md-3">
+              <p><%= value["Pass"] %></p>
+              <p class="pass">Pass</p>
+            </div>
+            <div class="col-md-3">
+              <p><%= value["Fail"] %></p>
+              <p class="fail">Fail</p>
+            </div>
+            <div class="col-md-3">
+              <p><%= value["Disabled"] %></p>
+              <p class="disabled">Disable</p>
+            </div>
+          </div>
+          </div>
+      </div>
+      <% end %>
+    <%end%>
+  <div class="box">
+    <a type="button" href=<%= new_product_path%>>
+      <div class="box-content btn-lg btn-danger">
+          <span id="glyphicon-plus" class="glyphicon glyphicon-plus"></span>
+      </div>
+    </a>
+  </div>
+</div>

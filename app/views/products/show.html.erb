@@ -1,0 +1,114 @@
+
+<div class="well">
+<h1><%= @product.name %></h1>
+</div>
+<div class="row">
+
+  <div class="col-sm-4">
+    <div class="well" id="well">
+      <h2>Execution Time</h2>
+      <%= content_tag :div, "",id: "exec_time_bar"%>
+    </div>
+  </div>
+
+
+  <div class="col-sm-4">
+    <div class="well" id="well">
+      <h2>Protocols Results</h2>
+      <script>
+        // variables for donut chart
+        var donut_data = [], colors = [];
+        var green = '#66BB6A', red = '#EB5050', yellow = '#FFC107';
+        // variables for donut chart
+        var donut_data = [{
+          label: "Pass",
+          value: <%= @prod_results.find_all{|k| k[1] == "Pass"}.length %>
+          },
+          {
+          label: "Fail",
+          value: <%= @prod_results.find_all{|k| k[1] == "Fail"}.length %>
+          },
+          {
+          label: "Disabled",
+          value: <%= @prod_results.find_all{|k| k[1] == "Disabled"}.length %>
+          }];
+        var colors = [green, red, yellow];
+        var total =<%= @prod_results.length %>;
+
+        // variables for bar chart
+        var time_seconds = [], time_format = [], results = [];
+        <% @prod_results.each do |elem| %>
+          time_seconds.push({
+            x: "<%= elem[0] %>",
+            a: <%= TimeModule.convert_to_seconds(elem[-1].to_time) %>
+          });
+          time_format.push("<%= elem[-1] %>");
+          results.push("<%= elem[1] %>");
+        <% end %>
+        labels = ['Execution Time (sec)']
+
+      </script>
+      <%= content_tag :div, "",id: "morris_donut_chart" %>
+      <div id = "donut_legend"></div>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="well" id="well">
+      <p>List of high priority bugs</p>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="row">
+
+  <div class="col-sm-4">
+    <div class="well" id="small-well">
+        <strong>Product description goes here...</strong>
+    </div>
+    <div class="well">
+        <strong>DHF #: <%if @product.dhf_num != nil%></strong>
+        <p><%= @product.dhf_num %></p>
+        <% end %>
+    </div>
+  </div>
+
+  <div class="col-sm-8">
+    <div class="well clearfix">
+      <strong>Product's result:</strong>
+      <p><%= @result %></p>
+      <strong>Product's execution time:</strong>
+      <p><%= @prod_time %></p>
+      <div>
+        <%= link_to '<span class="glyphicon glyphicon-edit"></span> Edit Product'.html_safe, edit_product_path(@product), class:"button animate gray" %>
+      </div>
+      <div>
+        <%= link_to '<span class="glyphicon glyphicon-remove-sign"></span> Delete Product'.html_safe, product_path(@product), class:"button animate gray", method: :delete, data: {confirm: "Are you sure you want to delete the product #{@product.name}?"} %></span></h3>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="row">
+
+  <div class="col-sm-4">
+    <div class="well">
+      <p>User Profiles who executed protocols goes here...</p>
+    </div>
+
+    <div class="well">
+      <p>Commits on Jenkins goes here...</p>
+    </div>
+  </div>
+
+  <div class="col-sm-8">
+    <div class="well">
+	     <%= render partial: 'protocols/show', locals: {product: @product} %>
+    </div>
+  </div>
+
+</div>

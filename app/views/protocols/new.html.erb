@@ -1,0 +1,7 @@
+<% content_for :top_content do %>
+  <h1>Create new protocol</h1>
+<% end %>
+
+<div>
+  <%= render partial: 'newform', locals: {product: @product, protocol: @protocol, documentation: @document} %>
+</div>

@@ -1,0 +1,17 @@
+<!-- A partial to show file name, type, size and update time from when the testcase was created -->
+<% protocol.attachments.each do |file| %>
+<tr>
+	<td><%= file.attach_file_name.split('.').first %></td>
+	<% if file.attach_content_type == 'text/plain'%>
+		<td>txt</td>
+	<% else %>
+		<td><%= file.attach_content_type.split('/').last %></td>
+	<% end %>
+	<td><%= file.attach_file_size %></td>
+	<td><%= file.created_at %></td>
+	<td><%=link_to '<span class="glyphicon glyphicon-picture" id="big-glyph"></span>&nbsp'.html_safe, serve_inline_product_protocol_attachment_path(protocol.product,protocol,file), :target => "_blank"%>
+		<%=link_to '<span class="glyphicon glyphicon-download" id="big-glyph"></span>&nbsp'.html_safe, serve_attach_product_protocol_attachment_path(protocol.product,protocol,file)%>
+		<%= link_to '<span class="glyphicon glyphicon-remove-sign" id="big-glyph"></span>&nbsp'.html_safe, product_protocol_attachment_path(protocol.product,protocol,file), method: :delete, data: {confirm: "Are you sure you want to delete the file?"} %>
+	</td>
+</tr>
+<% end %>
