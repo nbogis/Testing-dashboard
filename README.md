@@ -10,10 +10,9 @@ Testing dashboard is an app written in Ruby 2.2.5 and rails 5 to show results of
 &nbsp;&nbsp;i. Testsuites
 &nbsp;&nbsp;&nbsp;a. Testcases
 
-Each of these element has it's own page that shows charts for testing result and the time it takes to finish executing the element.
+Each of these element has it's own page that shows information about the element, charts for testing result and the time it takes to finish executing the element.
 
-
-The app uses PostgreSQL for data storage, rspec, facroty girl and capybara for testing the app, morris for the charts, and bootstrap for the front-end.
+### Rails app compenents
 
 The app includes different compenents:
 
@@ -31,4 +30,8 @@ The app includes different compenents:
 
 * Bootstrap
 
-###
+### Authors
+
+* Nidaa Bugis - Back-End and Front-End
+
+* Nicholas Nguyen - Front-End
