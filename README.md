@@ -6,8 +6,11 @@ Testing dashboard is an app written in Ruby 2.2.5 and rails 5 to show results of
 ### Compenents hierarchy
 
 1- Product
+
 &nbsp;A. Protocols
+
 &nbsp;&nbsp;i. Testsuites
+
 &nbsp;&nbsp;&nbsp;a. Testcases
 
 Each of these element has it's own page that shows information about the element, charts for testing result and the time it takes to finish executing the element.
